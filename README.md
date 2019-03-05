@@ -47,7 +47,6 @@ The method takes 3 arguments:
 - Status Code (**Optional**; 200 by default; Integer) - The HTTP Status Code;
 - HTTP Headers (**Optional**; empty by default; Key `=>` Value Array) - The HTTP Headers;
 
-And send it
 ```php
 echo $response->sendResponse(json_encode($arr), 200, ['Content-Type' => 'application/json']);
 ```
