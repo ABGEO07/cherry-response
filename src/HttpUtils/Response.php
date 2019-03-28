@@ -1,22 +1,37 @@
 <?php
+/**
+ * The file contains Response class
+ *
+ * PHP version 5
+ *
+ * @category Library
+ * @package  Cherry
+ * @author   Temuri Takalandze <takalandzet@gmail.com>
+ * @license  https://github.com/ABGEO07/cherry-response/blob/master/LICENSE MIT
+ * @link     https://github.com/ABGEO07/cherry-response
+ */
 
-namespace Cherry;
+namespace Cherry\HttpUtils;
 
 /**
  * Cherry project response class
  *
- * @package Cherry
- * @author Temuri Takalandze(ABGEO) <takalandzet@gmail.com>
+ * @category Library
+ * @package  Cherry
+ * @author   Temuri Takalandze <takalandzet@gmail.com>
+ * @license  https://github.com/ABGEO07/cherry-response/blob/master/LICENSE MIT
+ * @link     https://github.com/ABGEO07/cherry-response
  */
 class Response
 {
     /**
      * Get http status code full text
      *
-     * @param $statusCode
+     * @param int $statusCode HTTP Status Code
+     *
      * @return string
      */
-    private function getStatusCodeMsg($statusCode)
+    private function _getStatusCodeMsg($statusCode)
     {
         $msg = array(
             100 => 'Continue',
@@ -101,33 +116,41 @@ class Response
     /**
      * Set HTTP Headers
      *
-     * @param $statusCode
-     * @param $headers
+     * @param int   $statusCode HTTP Status Code
+     * @param array $headers    HTTP Headers
+     *
+     * @return void
      */
-    private function setHTTPHeaders($statusCode, $headers)
+    private function _setHTTPHeaders($statusCode, $headers)
     {
         //Set HTTP Version and status header
-        header("{$_SERVER['SERVER_PROTOCOL']} {$statusCode} {$this->getStatusCodeMsg($statusCode)}");
+        header(
+            "{$_SERVER['SERVER_PROTOCOL']} {$statusCode} ".
+            "{$this->_getStatusCodeMsg($statusCode)}"
+        );
+
         //Set other headers
-        foreach ($headers as $k => $v)
+        foreach ($headers as $k => $v) {
             header("{$k}: $v");
+        }
     }
 
     /**
      * Send Response.
      *
-     * @param $content
-     * @param int $statusCode
-     * @param array $headers
+     * @param string $content    Content value
+     * @param int    $statusCode HTTP Status Code
+     * @param array  $headers    HTTP Headers
      *
      * @return mixed
      */
     public function sendResponse($content, $statusCode = 200, $headers = [])
     {
-        if ($content == '' || $content == null)
+        if ($content == '' || $content == null) {
             die('Set response content!');
+        }
 
-        $this->setHTTPHeaders($statusCode, $headers);
+        $this->_setHTTPHeaders($statusCode, $headers);
 
         return $content;
     }
