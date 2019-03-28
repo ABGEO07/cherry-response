@@ -3,7 +3,7 @@
 //Include autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Cherry\Response;
+use Cherry\HttpUtils\Response;
 
 //Send Response
 $response = new Response();
